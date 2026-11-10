@@ -502,7 +502,20 @@ var SFX={
   gulp:function(){sfx(function(t){tone(sfxG,"sine",330,170,t,.11,.16);tone(sfxG,"sine",210,300,t+.1,.08,.1);});},
   tap:function(){sfx(function(t){tone(sfxG,"sine",880,660,t,.08,.07);});},
   nope:function(){sfx(function(t){tone(sfxG,"square",196,185,t,.09,.05);tone(sfxG,"square",165,156,t+.1,.12,.05);});},
-  splash:function(){sfx(function(t){noise(sfxG,"lowpass",2600,350,t,.55,.4);for(var i=0;i<5;i++)tone(sfxG,"sine",500+Math.random()*700,200,t+.08+i*.06,.08,.07);});},
+  splash:function(){sfx(function(t){
+    // liquid: a low resonant slosh, a burst of rising "bubble" chirps, then a few drops landing
+    noise(sfxG,"bandpass",950,280,t,.3,.3,5);
+    noise(sfxG,"bandpass",2400,900,t+.02,.16,.1,3);
+    var i,f,d;
+    for(i=0;i<16;i++){
+      f=380+Math.random()*1100;d=.035+Math.random()*.045;
+      tone(sfxG,"sine",f,f*(1.6+Math.random()*.7),t+.03+Math.pow(Math.random(),1.6)*.5,d,.07+Math.random()*.05);
+    }
+    for(i=0;i<4;i++){
+      f=520+Math.random()*380;
+      tone(sfxG,"sine",f,f*.3,t+.36+i*.1+Math.random()*.05,.1,.11);
+    }
+  });},
   cold:function(){sfx(function(t){tone(sfxG,"triangle",660,660,t,.22,.08);tone(sfxG,"triangle",494,494,t+.16,.34,.08);});},
   alert:function(){sfx(function(t){tone(sfxG,"square",988,988,t,.07,.05);tone(sfxG,"square",988,988,t+.13,.07,.05);});},
   tick:function(){sfx(function(t){tone(sfxG,"square",1175,1175,t,.09,.07);});},
